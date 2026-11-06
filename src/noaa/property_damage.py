@@ -1,9 +1,10 @@
+from noaa.data import get_data
 import pandas
-import os
 
-cwd = os.getcwd()
+data = get_data("datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv")
 
-data = pandas.read_csv(f"{cwd}/datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv")
+if data is FileNotFoundError:
+    raise FileNotFoundError
 
 mult = {"K": 1e3, "M": 1e6, "B": 1e9}
 
