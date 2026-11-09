@@ -2,7 +2,14 @@ import hashlib
 import os
 
 import pandas
+import duckdb
 
+def get_bulk_data(url: str ) -> pandas.DataFrame:
+    duckdb.sql("SET s3_endpoint='storage.googlesapis.com'")
+
+    query = duckdb.sql(f"""SELECT * FROM read_parquet('{url}')""")
+    assert query is not None
+    return query.to_df()
 
 def get_data(path: str | None) -> pandas.DataFrame | FileNotFoundError:
     """
