@@ -11,6 +11,7 @@ dependencies = [
     "pandas>=3.1.1",
     "dvc",
     "prefect>=3.9.2",
+    "dvc-ssh>=4.3.0",
 ]
 
 [project.scripts]
