@@ -4,7 +4,8 @@ import pandas
 
 from noaa.data import get_data
 
-def parse_property_damage(data:pandas. DataFrame) -> pandas.DataFrame:
+
+def parse_property_damage(data: pandas.DataFrame) -> pandas.DataFrame:
     """
     transforms property damage numbers from units to singular dollar value (ex: 1K -> 1000)
     """
@@ -26,4 +27,11 @@ def parse_property_damage(data:pandas. DataFrame) -> pandas.DataFrame:
     return data
 
 
-print(parse_property_damage(cast(pandas.DataFrame, get_data("datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv"))))
+print(
+    parse_property_damage(
+        cast(
+            pandas.DataFrame,
+            get_data("datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv"),
+        )
+    )
+)

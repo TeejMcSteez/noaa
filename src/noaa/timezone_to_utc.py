@@ -1,6 +1,9 @@
 from typing import cast
-from noaa.data import get_data
+
 import pandas
+
+from noaa.data import get_data
+
 
 def parse_timezones(data: pandas.DataFrame) -> pandas.DataFrame:
     """
@@ -25,9 +28,7 @@ def parse_timezones(data: pandas.DataFrame) -> pandas.DataFrame:
     )
     dates[2] = "19" + dates[2]
     # Flip to Y-M-D TS adding 19 to the year (for this dataset only)
-    data["BEGIN_DATE_UTC"] = (
-        dates[2] + "-" + dates[1] + "-" + dates[0] + " " + dates[3]
-    )
+    data["BEGIN_DATE_UTC"] = dates[2] + "-" + dates[1] + "-" + dates[0] + " " + dates[3]
     # Add timezone with offset for proper datetime processing
     dts = data["BEGIN_DATE_UTC"] + " " + data["CZ_TIMEZONE"].map(offsets.get)
     # convert to UTC
@@ -36,4 +37,12 @@ def parse_timezones(data: pandas.DataFrame) -> pandas.DataFrame:
     )
     return data
 
-print(parse_timezones(cast(pandas.DataFrame, get_data("datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv"))))
+
+print(
+    parse_timezones(
+        cast(
+            pandas.DataFrame,
+            get_data("datasets/StormEvents_details-ftp_v1.0_d1950_c20260323.csv"),
+        )
+    )
+)
