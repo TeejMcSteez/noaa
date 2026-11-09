@@ -21,19 +21,15 @@ def parse_timezones(data: pandas.DataFrame) -> pandas.DataFrame:
     }
     assert data is not FileNotFoundError
     data = cast(pandas.DataFrame, data)
-
-    # Extract D-M-Y TS from dates to add full year for accuracy
-    dates = data["BEGIN_DATE_TIME"].str.extract(
-        r"(\d{1,2})-([A-Za-z]{3})-(\d{2}) (\d{2}:\d{2}:\d{2})"
-    )
-    dates[2] = "19" + dates[2]
-    # Flip to Y-M-D TS adding 19 to the year (for this dataset only)
-    data["BEGIN_DATE_UTC"] = dates[2] + "-" + dates[1] + "-" + dates[0] + " " + dates[3]
     # Add timezone with offset for proper datetime processing
-    dts = data["BEGIN_DATE_UTC"] + " " + data["CZ_TIMEZONE"].map(offsets.get)
+    sts = data["BEGIN_DATE_TIME"] + " " + data["CZ_TIMEZONE"].map(offsets.get)
+    ets = data["END_DATE_TIME"] + " " + data["CZ_TIMEZONE"].map(offsets.get)
     # convert to UTC
     data["BEGIN_DATE_UTC"] = pandas.to_datetime(
-        arg=dts, utc=True, format="%Y-%b-%d %H:%M:%S %z"
+        arg=sts, utc=True, format="%Y-%b-%d %H:%M:%S %z"
+    )
+    data["END_DATE_UTC"] = pandas.to_datetime(
+        args=ets, utc=True, format="%Y-%b-%d %H:%M:%S %z", errors="coerce"
     )
     return data
 
