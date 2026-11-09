@@ -1,4 +1,4 @@
 [core]
-    remote = remote
-['remote "remote"']
-    url = ssh://teej@192.168.0.216:/home/teej/dvc
+    remote = storage
+['remote "storage"']
+    url = ssh://teej@192.168.0.215:/home/teej/dvc
