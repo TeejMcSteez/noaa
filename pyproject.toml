@@ -12,6 +12,7 @@ dependencies = [
     "dvc",
     "prefect>=3.9.2",
     "dvc-ssh>=4.3.0",
+    "duckdb>=2.0.0",
 ]
 
 [project.scripts]
